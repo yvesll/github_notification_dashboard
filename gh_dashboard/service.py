@@ -168,7 +168,7 @@ class DashboardService:
                 }
 
             try:
-                sync_payload = self.github_api.fetch_notifications(include_read=False)
+                sync_payload = self.github_api.fetch_notifications(include_read=True)
             except GitHubAPIError as exc:
                 if self.storage.get_counts()["all"] > 0:
                     logger.warning("Refresh failed, keeping cached notifications: %s", exc)

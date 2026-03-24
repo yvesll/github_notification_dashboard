@@ -17,8 +17,9 @@ A Flask dashboard for triaging GitHub PR and issue notifications with inline AI 
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-python3 app.py
+source .venv/bin/activate # .venv\Scripts\activate for windows
+pip install -r requirements.txt
+python app.py
 ```
 
 Open [http://127.0.0.1:5055](http://127.0.0.1:5055).
@@ -31,6 +32,7 @@ A sanitized template is available at [`config.template.toml`](./config.template.
 Use [`config.toml`](./config.toml) for your local runtime values:
 
 - `github.token`: GitHub personal access token with notifications and repo read access.
+  Note: for this dashboard, a personal access token (classic / legacy PAT) is often the most reliable choice because some GitHub API capabilities still work better with classic tokens than with fine-grained tokens.
 - `ai.provider`: `openai_compatible`, `anthropic`, or `gemini`
 - `ai.api_key`, `ai.base_url`, `ai.model`: provider credentials and model selection
 - `ai.anthropic_version`: required Anthropic API version header when using `anthropic`
@@ -41,6 +43,11 @@ Use [`config.toml`](./config.toml) for your local runtime values:
 - `webhook.secret`: Optional secret for validating `POST /api/webhooks/github`.
 
 Environment placeholders like `"${GITHUB_TOKEN}"` are supported.
+
+Useful GitHub token references:
+
+- [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+- [Authorizing a personal access token for use with single sign-on](https://docs.github.com/en/authentication/authenticating-with-single-sign-on/authorizing-a-personal-access-token-for-use-with-single-sign-on)
 
 For multi-select label defaults, use TOML arrays:
 
@@ -143,4 +150,4 @@ Useful events:
 - SQLite cache: `data/gh_dashboard.sqlite3`
 - Detail cache and AI summary cache are invalidated automatically when GitHub reports a newer `updated_at` timestamp for a thread.
 - GitHub's REST API does not expose a full historical Done list, so the Done view becomes accurate for threads this app has already seen during sync.
-- Inbox is synced from the current unread notifications feed; Local Done is a local archive of items no longer present in that unread feed.
+- Inbox is synced from the current GitHub inbox feed, including both read and unread items. Unread items are only highlighted. Local Done is a local archive of items no longer present in the inbox feed.
