@@ -1,4 +1,4 @@
-# GitHub Review Desk
+# GitHub Notification Dashboard
 
 A Flask dashboard for triaging GitHub PR and issue notifications with inline AI summaries, cached discussion detail, configurable polling, and webhook-triggered refreshes.
 
