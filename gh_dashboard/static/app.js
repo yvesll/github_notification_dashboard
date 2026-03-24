@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2026 yvesll
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 const defaults = JSON.parse(document.getElementById("app-defaults").textContent);
 const CHECK_FILTER_OPTIONS = ["all", "passed", "other"];
 const REVIEW_FILTER_OPTIONS = ["all", "changes_requested", "approved", "commented", "none"];

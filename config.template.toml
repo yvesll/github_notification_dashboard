@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 yvesll
+# SPDX-License-Identifier: Apache-2.0
+
 [app]
 host = "127.0.0.1"
 port = 5055
