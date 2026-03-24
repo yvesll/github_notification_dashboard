@@ -1,0 +1,46 @@
+[app]
+host = "127.0.0.1"
+port = 5055
+debug = false
+secret_key = "replace-me"
+
+[storage]
+database_path = "data/gh_dashboard.sqlite3"
+
+[github]
+token = "${GITHUB_TOKEN}"
+api_base_url = "https://api.github.com"
+notifications_per_page = 50
+max_pages = 4
+request_timeout = 20
+mark_done_on_github = false
+
+[ai]
+provider = "openai_compatible"
+api_key = "${OPENAI_API_KEY}"
+base_url = "https://api.openai.com/v1"
+model = "gpt-4.1-mini"
+anthropic_version = "2023-06-01"
+max_output_tokens = 600
+summary_focus_prompt = "Quickly summarize the description, the main discussion, and the latest status."
+request_timeout = 45
+max_context_chars = 240000
+
+[polling]
+enabled = true
+interval_seconds = 300
+run_initial_sync = true
+
+[defaults]
+view = "all"
+status = "open"
+repository = "all"
+label_include = []
+label_exclude = []
+reason = "all"
+checks = "all"
+review = "all"
+keyword = ""
+
+[webhook]
+secret = ""

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GitHub Review Desk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="sidebar">
+        <section class="panel panel--filters">
+          <div class="panel__header">
+            <h2>Views</h2>
+            <button id="reset-filters" class="panel__link-button" type="button">Reset all filters</button>
+          </div>
+          <div id="view-switch" class="view-switch">
+            <button class="view-chip" data-view="inbox" type="button">Inbox</button>
+            <button class="view-chip" data-view="done" type="button">Local Done</button>
+            <button class="view-chip" data-view="all" type="button">All</button>
+          </div>
+          <p class="filter-note">Inbox mirrors current unread notifications. Local Done is this app's local archive.</p>
+
+          <label class="filter-field">
+            <span>Status</span>
+            <div id="status-filter-chips" class="chip-filter"></div>
+          </label>
+
+          <label class="filter-field">
+            <span>Repository</span>
+            <div id="repository-combobox" class="combobox-host"></div>
+          </label>
+
+          <label id="label-include-filter-field" class="filter-field is-hidden">
+            <span>Label include</span>
+            <div id="label-include-combobox" class="combobox-host"></div>
+          </label>
+
+          <label id="label-exclude-filter-field" class="filter-field is-hidden">
+            <span>Label exclude</span>
+            <div id="label-exclude-combobox" class="combobox-host"></div>
+          </label>
+
+          <label class="filter-field">
+            <span>Reason</span>
+            <div id="reason-combobox" class="combobox-host"></div>
+          </label>
+
+          <label class="filter-field">
+            <span>Checks</span>
+            <div id="checks-filter-chips" class="chip-filter"></div>
+          </label>
+
+          <label class="filter-field">
+            <span>Review</span>
+            <div id="review-filter-chips" class="chip-filter"></div>
+          </label>
+        </section>
+
+        <section class="panel panel--stats">
+          <div class="panel__header">
+            <h2>Queue</h2>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-tile">
+              <span class="stat-tile__label">Inbox</span>
+              <strong id="count-inbox">0</strong>
+            </article>
+            <article class="stat-tile">
+              <span class="stat-tile__label">Done</span>
+              <strong id="count-done">0</strong>
+            </article>
+            <article class="stat-tile">
+              <span class="stat-tile__label">All</span>
+              <strong id="count-all">0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel panel--notes">
+          <div class="panel__header">
+            <h2>Signals</h2>
+          </div>
+          <dl class="meta-list">
+            <div>
+              <dt>Last sync</dt>
+              <dd id="meta-last-sync">Never</dd>
+            </div>
+            <div>
+              <dt>Source</dt>
+              <dd id="meta-last-source">n/a</dd>
+            </div>
+            <div>
+              <dt>Polling</dt>
+              <dd id="meta-polling">Off</dd>
+            </div>
+            <div>
+              <dt>AI summary</dt>
+              <dd id="meta-ai">Off</dd>
+            </div>
+          </dl>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <header class="workspace__header">
+          <div>
+            <h2 class="workspace__title workspace__title--compact">GitHub notification dashboard</h2>
+          </div>
+          <div class="workspace__actions">
+            <button id="refresh-button" class="action-button action-button--primary" type="button">
+              Refresh now
+            </button>
+          </div>
+        </header>
+
+        <section class="toolbar">
+          <div class="toolbar__search">
+            <input id="keyword-search" class="toolbar__search-input" type="search" placeholder="Search title or description">
+          </div>
+          <div id="results-summary" class="toolbar__summary">Showing 0 notifications.</div>
+        </section>
+
+        <section class="list-panel">
+          <div id="notification-list" class="notification-list" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
+
+    <script id="app-defaults" type="application/json">{{ defaults|tojson }}</script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
