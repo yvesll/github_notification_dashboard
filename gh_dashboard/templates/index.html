@@ -62,26 +62,6 @@
           </label>
         </section>
 
-        <section class="panel panel--stats">
-          <div class="panel__header">
-            <h2>Queue</h2>
-          </div>
-          <div class="stats-grid">
-            <article class="stat-tile">
-              <span class="stat-tile__label">Inbox</span>
-              <strong id="count-inbox">0</strong>
-            </article>
-            <article class="stat-tile">
-              <span class="stat-tile__label">Done</span>
-              <strong id="count-done">0</strong>
-            </article>
-            <article class="stat-tile">
-              <span class="stat-tile__label">All</span>
-              <strong id="count-all">0</strong>
-            </article>
-          </div>
-        </section>
-
         <section class="panel panel--notes">
           <div class="panel__header">
             <h2>Signals</h2>
@@ -113,6 +93,20 @@
             <h2 class="workspace__title workspace__title--compact">GitHub notification dashboard</h2>
           </div>
           <div class="workspace__actions">
+            <div class="queue-inline" aria-label="Queue summary">
+              <article class="stat-tile stat-tile--inline">
+                <span class="stat-tile__label">Inbox</span>
+                <strong id="count-inbox">0</strong>
+              </article>
+              <article class="stat-tile stat-tile--inline">
+                <span class="stat-tile__label">Done</span>
+                <strong id="count-done">0</strong>
+              </article>
+              <article class="stat-tile stat-tile--inline">
+                <span class="stat-tile__label">All</span>
+                <strong id="count-all">0</strong>
+              </article>
+            </div>
             <button id="refresh-button" class="action-button action-button--primary" type="button">
               Refresh now
             </button>

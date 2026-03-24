@@ -159,6 +159,9 @@ class DashboardService:
 
     def sync_notifications(self, source: str = "manual") -> dict[str, Any]:
         with self.sync_lock:
+            # Re-run local storage initialization on every sync so a manual refresh
+            # can self-heal stale cache formats without requiring DB deletion.
+            self.storage.initialize()
             started_at = utc_now()
             if not self.github_api.is_configured():
                 self.storage.set_metadata("last_sync_at", started_at)

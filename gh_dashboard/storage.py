@@ -12,6 +12,9 @@ import sqlite3
 from typing import Iterator
 
 
+NOTIFICATION_CACHE_VERSION = "2026-03-24-notification-cache-v1"
+
+
 def utc_now() -> str:
     return datetime.now(UTC).isoformat()
 
@@ -104,6 +107,7 @@ class Storage:
                 END
                 """
             )
+            self._ensure_cache_version(conn)
 
     def upsert_notifications(self, notifications: list[dict[str, object]]) -> None:
         if not notifications:
@@ -573,3 +577,36 @@ class Storage:
                     normalized.append({"name": name, "color": color})
 
         return normalized
+
+    def _ensure_cache_version(self, conn: sqlite3.Connection) -> None:
+        row = conn.execute(
+            "SELECT value FROM metadata WHERE key = 'notification_cache_version'"
+        ).fetchone()
+        current_version = row["value"] if row else None
+
+        if current_version == NOTIFICATION_CACHE_VERSION:
+            return
+
+        conn.execute("DELETE FROM detail_cache")
+        conn.execute("DELETE FROM summary_cache")
+        conn.execute("DELETE FROM thread_states")
+        conn.execute("DELETE FROM notifications")
+        conn.execute(
+            """
+            DELETE FROM metadata
+            WHERE key IN (
+                'last_sync_at',
+                'last_sync_source',
+                'last_sync_complete',
+                'last_archived_refresh_at'
+            )
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO metadata (key, value)
+            VALUES ('notification_cache_version', ?)
+            ON CONFLICT(key) DO UPDATE SET value = excluded.value
+            """,
+            (NOTIFICATION_CACHE_VERSION,),
+        )

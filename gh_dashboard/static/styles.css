@@ -421,6 +421,18 @@ body::before {
   font-family: var(--font-display);
 }
 
+.stat-tile--inline {
+  min-width: 84px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.stat-tile--inline strong {
+  margin-top: 4px;
+  font-size: 1.05rem;
+}
+
 .stat-tile__label,
 .meta-list dt {
   font-size: 0.72rem;
@@ -460,6 +472,14 @@ body::before {
   padding: 14px;
 }
 
+.workspace__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .workspace__header,
 .toolbar {
   display: flex;
@@ -470,6 +490,13 @@ body::before {
 
 .workspace__header {
   margin-bottom: 6px;
+}
+
+.queue-inline {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .toolbar {
